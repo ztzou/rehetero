@@ -1,0 +1,59 @@
+# Global variables:
+#DATA   = lysozymeLarge
+METHOD = bionj
+
+# Sequences:
+
+# The alphabet to use:
+# DNA, RNA or Protein
+alphabet=Protein
+
+# The sequence file to use (sequences must be aligned!)
+input.sequence.file=./data/cleaned_fasta_AA/$(DATA).fasta
+
+# The alignment format:
+input.sequence.format=Fasta()
+
+#Sites to use:
+# all, nogap or complete (=only resolved chars)
+input.sequence.sites_to_use = all
+# Specify a maximum amount of gaps: may be an absolute number or a percentage.
+input.sequence.max_gap_allowed=85%
+
+# Output the distance matrix if any.
+output.matrix.file = $(DATA).mat
+
+# ----------------------------------------------------------------------------------------
+#                                     Model specification
+# ----------------------------------------------------------------------------------------
+# See the manual for a description of the syntax and available options.
+#
+model = JC69()
+
+rate_distribution = Constant()
+
+# Tree reconstruction method [wpgma|upgma|nj|bionj]
+method = $(METHOD)
+// Parameter estimation:
+// - init = keep as initial values,
+// - pairwise = estimate separately for each pair of sequences,
+// - iterations = use iterations and ML to estimate these parameters globally.
+optimization.method = init
+optimization.verbose = 1
+optimization.ignore_parameter =
+optimization.max_number_f_eval = 10000
+optimization.tolerance = 0.000001
+optimization.message_handler = $(DATA).messages
+optimization.profiler = $(DATA).profile
+
+# Should we write the resulting tree? none or file name.
+output.tree.file = ./data/$(METHOD)/$(DATA).$(METHOD).dnd
+output.tree.format = Newick
+
+# Bootstrap:
+bootstrap.number = 0
+bootstrap.approximate = no
+# Set this to yes for detailed output when bootstrapping. 
+bootstrap.verbose = no
+bootstrap.output.file = ./data/$(METHOD)/$(DATA).$(METHOD)_bstrees.dnd
+

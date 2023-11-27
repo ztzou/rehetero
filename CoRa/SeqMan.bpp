@@ -1,0 +1,32 @@
+# Global variables:
+
+# ---------------
+# Input sequences
+# ---------------
+
+# The alphabet to use:
+# [DNA|RNA|Protein|Generic]
+alphabet=Codon(letter=DNA)
+
+# The sequence file to use (sequences must be aligned!)
+input.sequence.file=$(DATA).fasta
+
+# The file format:
+input.sequence.format=Fasta()
+
+# ----------------
+# Output sequences
+# ----------------
+
+output.sequence.file=$(DATA).AA.fasta
+
+# The file format:
+output.sequence.format=Fasta()
+
+# -----------------------
+# Sequences manipulations
+# -----------------------
+#For example (see manual for a detailed list of available options):
+sequence.manip = CoerceToAlignment
+sequence.manip = Translate
+
